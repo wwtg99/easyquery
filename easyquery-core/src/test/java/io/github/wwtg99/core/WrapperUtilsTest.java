@@ -3,10 +3,12 @@ package io.github.wwtg99.core;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@DisplayName("WrapperUtils Test")
 public class WrapperUtilsTest {
 
     @Data

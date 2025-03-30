@@ -20,6 +20,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.36</lombok.version>
+        <junit.version>5.11.4</junit.version>
+        <mybatis-flex.version>1.10.8</mybatis-flex.version>
+        <mybatis-plus.version>3.5.11</mybatis-plus.version>
     </properties>
 
     <!-- 全局依赖 -->
@@ -33,7 +36,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.11.4</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
