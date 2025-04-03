@@ -14,6 +14,8 @@ import io.github.wwtg99.core.extractor.SorterExtractor;
 import io.github.wwtg99.core.processor.DefaultValueProcessor;
 import io.github.wwtg99.core.processor.DefaultValueProcessorFactory;
 import io.github.wwtg99.core.processor.IValueProcessor;
+import java.lang.reflect.Field;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -21,19 +23,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
 @DisplayName("QueryWrapper Test")
 public class QueryWrapperTest {
 
     @Data
     @AllArgsConstructor
     static class Obj1 {
-        @QueryFilter
-        private String name;
-        @QueryFilter
-        private Integer age;
+        @QueryFilter private String name;
+        @QueryFilter private Integer age;
+
         @QueryFilter(value = "time", action = QueryFilterAction.GE)
         private String startTime;
 
@@ -43,9 +41,11 @@ public class QueryWrapperTest {
     @Data
     @AllArgsConstructor
     static class Obj2 {
-        @QuerySearcher
-        private String item;
-        @QuerySearcher(value = {"name", "label"}, searchStrategy = SearchStrategy.BOTH)
+        @QuerySearcher private String item;
+
+        @QuerySearcher(
+                value = {"name", "label"},
+                searchStrategy = SearchStrategy.BOTH)
         private String query;
 
         private String noAnno;
@@ -54,12 +54,16 @@ public class QueryWrapperTest {
     @Data
     @AllArgsConstructor
     static class Obj3 {
-        @QuerySorter
-        private Boolean order;
-        @QuerySorter(value = "order", trueForAsc = false, enableForNull = true, defaultDirection = SorterDirection.DESC)
+        @QuerySorter private Boolean order;
+
+        @QuerySorter(
+                value = "order",
+                trueForAsc = false,
+                enableForNull = true,
+                defaultDirection = SorterDirection.DESC)
         private Boolean order2;
-        @QuerySorter
-        private Integer order3;
+
+        @QuerySorter private Integer order3;
 
         private Boolean noAnno;
     }
@@ -67,14 +71,13 @@ public class QueryWrapperTest {
     @Data
     @AllArgsConstructor
     static class Obj4 {
-        @QueryFilter
-        private String name;
-        @QuerySearcher
-        private String query;
+        @QueryFilter private String name;
+        @QuerySearcher private String query;
+
         @QueryFilter(action = QueryFilterAction.GE)
         private Integer age;
-        @QuerySorter
-        private Boolean date;
+
+        @QuerySorter private Boolean date;
 
         private String noAnno;
     }
@@ -96,7 +99,7 @@ public class QueryWrapperTest {
 
     @Test
     @SneakyThrows
-    public void testFilterExtractor(){
+    public void testFilterExtractor() {
         // field name
         String name = "name";
         String fieldValue1 = "wwtg99";
@@ -111,6 +114,7 @@ public class QueryWrapperTest {
         Assertions.assertEquals(QueryFilterAction.EQ, entry1.getAction());
         Assertions.assertEquals(fieldValue1, entry1.getValue());
         Assertions.assertEquals(String.class, entry1.getValType());
+        Assertions.assertNull(extractor.extractField(field, name, null));
         // field age
         name = "age";
         Integer fieldValue2 = 1;
@@ -158,9 +162,10 @@ public class QueryWrapperTest {
         Assertions.assertEquals(name, entry.getEntryName());
         Assertions.assertInstanceOf(SearchEntry.class, entry);
         SearchEntry entry1 = (SearchEntry) entry;
-        Assertions.assertArrayEquals(new String[]{name}, entry1.getFields());
+        Assertions.assertArrayEquals(new String[] {name}, entry1.getFields());
         Assertions.assertEquals(SearchStrategy.STARTS_WITH, entry1.getSearchStrategy());
         Assertions.assertEquals(fieldValue1, entry1.getValue());
+        Assertions.assertNull(extractor.extractField(field, name, null));
         // field query
         name = "query";
         String fieldValue2 = "query";
@@ -170,7 +175,7 @@ public class QueryWrapperTest {
         Assertions.assertEquals(name, entry.getEntryName());
         Assertions.assertInstanceOf(SearchEntry.class, entry);
         entry1 = (SearchEntry) entry;
-        Assertions.assertArrayEquals(new String[]{"name", "label"}, entry1.getFields());
+        Assertions.assertArrayEquals(new String[] {"name", "label"}, entry1.getFields());
         Assertions.assertEquals(SearchStrategy.BOTH, entry1.getSearchStrategy());
         Assertions.assertEquals(fieldValue2, entry1.getValue());
         // field query
@@ -207,6 +212,7 @@ public class QueryWrapperTest {
         fieldValue1 = null;
         entry = extractor.extractField(field, name, fieldValue1);
         Assertions.assertNull(entry);
+        Assertions.assertNull(extractor.extractField(field, name, null));
         // field order2
         name = "order2";
         Boolean fieldValue2 = true;
@@ -251,7 +257,9 @@ public class QueryWrapperTest {
     @Test
     public void testExtractHolder() {
         ExtractorHolder holder = new ExtractorHolder();
-        holder.addExtractor(new FilterExtractor()).addExtractor(new SearcherExtractor()).addExtractor(new SorterExtractor());
+        holder.addExtractor(new FilterExtractor())
+                .addExtractor(new SearcherExtractor())
+                .addExtractor(new SorterExtractor());
         List<IQueryEntry> entries = holder.extract(null);
         Assertions.assertEquals(0, entries.size());
         Obj4 obj4 = new Obj4("name", "query", 30, true, "no");
@@ -265,6 +273,5 @@ public class QueryWrapperTest {
         Assertions.assertEquals("age", entries.get(2).getEntryName());
         Assertions.assertInstanceOf(SortEntry.class, entries.get(3));
         Assertions.assertEquals("date", entries.get(3).getEntryName());
-
     }
 }

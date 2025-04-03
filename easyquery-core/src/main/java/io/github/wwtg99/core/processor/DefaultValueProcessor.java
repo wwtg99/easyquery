@@ -1,8 +1,8 @@
 package io.github.wwtg99.core.processor;
 
 /**
- * Default value processor.
- * Do nothing.
+ * Default value processor. Do nothing.
+ *
  * @author wwtg99
  */
 public class DefaultValueProcessor implements IValueProcessor {

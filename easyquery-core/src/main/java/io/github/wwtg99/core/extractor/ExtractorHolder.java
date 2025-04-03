@@ -2,24 +2,37 @@ package io.github.wwtg99.core.extractor;
 
 import io.github.wwtg99.core.WrapperUtils;
 import io.github.wwtg99.core.entry.IQueryEntry;
-import lombok.Getter;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import lombok.Getter;
 
+/**
+ * Extractor holder.
+ * @author wwtg99
+ */
 @Getter
 public class ExtractorHolder {
 
     private final List<IFieldExtractor> extractorList = new ArrayList<>();
 
+    /**
+     * Add extractor.
+     * @param extractor extractor
+     * @return this
+     */
     public ExtractorHolder addExtractor(IFieldExtractor extractor) {
         this.extractorList.add(extractor);
         return this;
     }
 
+    /**
+     * Extract fields from object.
+     * @param query objet
+     * @return list of entries
+     */
     public List<IQueryEntry> extract(Object query) {
         if (Objects.isNull(query)) {
             return new ArrayList<>();
@@ -32,13 +45,13 @@ public class ExtractorHolder {
             field.setAccessible(true);
             Object fieldValue = getFieldValue(field, query);
             list.addAll(this.extractField(field, fieldValue));
-
         }
         return list;
     }
 
     /**
      * Get field value from object.
+     *
      * @param field field
      * @param obj object
      * @return field value
@@ -53,6 +66,7 @@ public class ExtractorHolder {
 
     /**
      * Extract field.
+     *
      * @param field field
      * @param fieldValue field value
      * @return QueryEntry
@@ -66,7 +80,10 @@ public class ExtractorHolder {
         List<IQueryEntry> arr = new ArrayList<>();
         // extract
         String finalFieldName = fieldName;
-        extractorList.forEach(e -> Optional.ofNullable(e.extractField(field, finalFieldName, fieldValue)).ifPresent(arr::add));
+        extractorList.forEach(
+                e ->
+                        Optional.ofNullable(e.extractField(field, finalFieldName, fieldValue))
+                                .ifPresent(arr::add));
         return arr;
     }
 }

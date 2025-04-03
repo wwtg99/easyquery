@@ -17,15 +17,17 @@ public class MyBatisPlusQueryWrapper<E> implements IQueryBuilder<QueryWrapper<E>
 
     @Override
     public QueryWrapper<E> build(QueryWrapper<E> wrapper, Object query) {
-        this.extract(query).forEach(entry -> {
-            if (entry instanceof FilterEntry ent) {
-                this.buildFilter(wrapper, ent);
-            } else if (entry instanceof SortEntry ent) {
-                this.buildSorter(wrapper, ent);
-            } else if (entry instanceof SearchEntry ent) {
-                this.buildSearcher(wrapper, ent);
-            }
-        });
+        this.extract(query)
+                .forEach(
+                        entry -> {
+                            if (entry instanceof FilterEntry ent) {
+                                this.buildFilter(wrapper, ent);
+                            } else if (entry instanceof SortEntry ent) {
+                                this.buildSorter(wrapper, ent);
+                            } else if (entry instanceof SearchEntry ent) {
+                                this.buildSearcher(wrapper, ent);
+                            }
+                        });
         return wrapper;
     }
 
@@ -47,25 +49,25 @@ public class MyBatisPlusQueryWrapper<E> implements IQueryBuilder<QueryWrapper<E>
             case LT -> wrapper.lt(field, val);
             case IN -> {
                 // val must be Iterable and not empty
-                if (val instanceof Iterable<?> && ((Iterable<?>)val).iterator().hasNext()) {
+                if (val instanceof Iterable<?> && ((Iterable<?>) val).iterator().hasNext()) {
                     wrapper.in(field, val);
                 }
             }
             case NOT_IN -> {
                 // val must be Iterable and not empty
-                if (val instanceof Iterable<?> && ((Iterable<?>)val).iterator().hasNext()) {
+                if (val instanceof Iterable<?> && ((Iterable<?>) val).iterator().hasNext()) {
                     wrapper.notIn(field, val);
                 }
             }
             case IS_NULL -> {
                 // value must be boolean
-                if (val instanceof Boolean && (Boolean)val) {
+                if (val instanceof Boolean && (Boolean) val) {
                     wrapper.isNull(field);
                 }
             }
             case IS_NOT_NULL -> {
                 // value must be boolean
-                if (val instanceof Boolean && (Boolean)val) {
+                if (val instanceof Boolean && (Boolean) val) {
                     wrapper.isNotNull(field);
                 }
             }
@@ -87,21 +89,24 @@ public class MyBatisPlusQueryWrapper<E> implements IQueryBuilder<QueryWrapper<E>
         SearchStrategy strategy = entry.getSearchStrategy();
         Object val = entry.getValue();
         switch (strategy) {
-            case STARTS_WITH -> wrapper.and(wrapper1 -> {
-                for (String field : fields) {
-                    wrapper1.or(wrapper2 -> wrapper2.likeLeft(field, val));
-                }
-            });
-            case ENDS_WITH -> wrapper.and(wrapper1 -> {
-                for (String field: fields) {
-                    wrapper1.or(wrapper2 -> wrapper2.likeRight(field, val));
-                }
-            });
-            case BOTH -> wrapper.and(wrapper1 -> {
-                for (String field : fields) {
-                    wrapper1.or(wrapper2 -> wrapper2.like(field, val));
-                }
-            });
+            case STARTS_WITH -> wrapper.and(
+                    wrapper1 -> {
+                        for (String field : fields) {
+                            wrapper1.or(wrapper2 -> wrapper2.likeLeft(field, val));
+                        }
+                    });
+            case ENDS_WITH -> wrapper.and(
+                    wrapper1 -> {
+                        for (String field : fields) {
+                            wrapper1.or(wrapper2 -> wrapper2.likeRight(field, val));
+                        }
+                    });
+            case BOTH -> wrapper.and(
+                    wrapper1 -> {
+                        for (String field : fields) {
+                            wrapper1.or(wrapper2 -> wrapper2.like(field, val));
+                        }
+                    });
         }
     }
 }

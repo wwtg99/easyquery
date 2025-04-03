@@ -5,11 +5,14 @@ import io.github.wwtg99.core.WrapperUtils;
 import io.github.wwtg99.core.annotation.QuerySearcher;
 import io.github.wwtg99.core.entry.IQueryEntry;
 import io.github.wwtg99.core.entry.SearchEntry;
-
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Extractor for searcher
+ * @author wwtg99
+ */
 public class SearcherExtractor implements IFieldExtractor {
     @Override
     public IQueryEntry extractField(Field field, String fieldName, Object fieldValue) {
@@ -26,11 +29,18 @@ public class SearcherExtractor implements IFieldExtractor {
         SearchStrategy strategy = anno.searchStrategy();
         // parse field name
         String[] parsedNames;
-        Set<String> annoValues = Optional.ofNullable(anno.value()).map(v -> Arrays.stream(v).filter(WrapperUtils::isStrNotEmpty).collect(Collectors.toSet())).orElse(Collections.emptySet());
+        Set<String> annoValues =
+                Optional.ofNullable(anno.value())
+                        .map(
+                                v ->
+                                        Arrays.stream(v)
+                                                .filter(WrapperUtils::isStrNotEmpty)
+                                                .collect(Collectors.toSet()))
+                        .orElse(Collections.emptySet());
         if (!annoValues.isEmpty()) {
-            parsedNames = annoValues.toArray(new String[]{});
+            parsedNames = annoValues.toArray(new String[] {});
         } else {
-            parsedNames = new String[]{fieldName};
+            parsedNames = new String[] {fieldName};
         }
         return new SearchEntry(field.getName(), parsedNames, fieldValue, strategy);
     }

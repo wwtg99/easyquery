@@ -23,6 +23,7 @@
         <junit.version>5.11.4</junit.version>
         <mybatis-flex.version>1.10.8</mybatis-flex.version>
         <mybatis-plus.version>3.5.11</mybatis-plus.version>
+        <spotless-plugin.version>2.44.3</spotless-plugin.version>
     </properties>
 
     <!-- 全局依赖 -->
@@ -41,4 +42,31 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless-plugin.version}</version>
+                <configuration>
+                    <java>
+                        <googleJavaFormat>
+                            <version>1.12.0</version>
+                            <style>AOSP</style>
+                        </googleJavaFormat>
+                        <importOrder />
+                        <removeUnusedImports />
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

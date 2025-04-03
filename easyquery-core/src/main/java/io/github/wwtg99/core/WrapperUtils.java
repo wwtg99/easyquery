@@ -1,16 +1,17 @@
 package io.github.wwtg99.core;
 
-
 import java.util.Objects;
 
 /**
  * Utils for wrapper.
+ *
  * @author wwtg99
  */
 public class WrapperUtils {
 
     /**
      * Whether str contains upper case.
+     *
      * @param str string
      * @return boolean
      */
@@ -23,6 +24,7 @@ public class WrapperUtils {
 
     /**
      * Transform camel case to snake case.
+     *
      * @param str camel case
      * @return snake case
      */
@@ -35,6 +37,7 @@ public class WrapperUtils {
 
     /**
      * Whether string is empty or null.
+     *
      * @param str string
      * @return boolean
      */
@@ -44,11 +47,11 @@ public class WrapperUtils {
 
     /**
      * Whether string is not empty or null.
+     *
      * @param str string
      * @return boolean
      */
     public static boolean isStrNotEmpty(String str) {
         return !isStrEmpty(str);
     }
-
 }

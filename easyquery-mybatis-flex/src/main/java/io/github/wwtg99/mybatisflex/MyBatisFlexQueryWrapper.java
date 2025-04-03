@@ -8,10 +8,9 @@ import io.github.wwtg99.core.entry.FilterEntry;
 import io.github.wwtg99.core.entry.SearchEntry;
 import io.github.wwtg99.core.entry.SortEntry;
 import io.github.wwtg99.core.extractor.ExtractorHolder;
+import java.util.Collection;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Collection;
 
 @Getter
 @RequiredArgsConstructor
@@ -21,15 +20,17 @@ public class MyBatisFlexQueryWrapper implements IQueryBuilder<QueryWrapper> {
 
     @Override
     public QueryWrapper build(QueryWrapper wrapper, Object query) {
-        this.extract(query).forEach(entry -> {
-            if (entry instanceof FilterEntry ent) {
-                this.buildFilter(wrapper, ent);
-            } else if (entry instanceof SortEntry ent) {
-                this.buildSorter(wrapper, ent);
-            } else if (entry instanceof SearchEntry ent) {
-                this.buildSearcher(wrapper, ent);
-            }
-        });
+        this.extract(query)
+                .forEach(
+                        entry -> {
+                            if (entry instanceof FilterEntry ent) {
+                                this.buildFilter(wrapper, ent);
+                            } else if (entry instanceof SortEntry ent) {
+                                this.buildSorter(wrapper, ent);
+                            } else if (entry instanceof SearchEntry ent) {
+                                this.buildSearcher(wrapper, ent);
+                            }
+                        });
         return wrapper;
     }
 
@@ -51,25 +52,25 @@ public class MyBatisFlexQueryWrapper implements IQueryBuilder<QueryWrapper> {
             case LT -> wrapper.lt(field, val);
             case IN -> {
                 // val must be Iterable and not empty
-                if (val instanceof Collection<?> && !((Collection<?>)val).isEmpty()) {
+                if (val instanceof Collection<?> && !((Collection<?>) val).isEmpty()) {
                     wrapper.in(field, (Collection<?>) val);
                 }
             }
             case NOT_IN -> {
                 // val must be Iterable and not empty
-                if (val instanceof Collection<?> && !((Collection<?>)val).isEmpty()) {
+                if (val instanceof Collection<?> && !((Collection<?>) val).isEmpty()) {
                     wrapper.notIn(field, (Collection<?>) val);
                 }
             }
             case IS_NULL -> {
                 // value must be boolean
-                if (val instanceof Boolean && (Boolean)val) {
+                if (val instanceof Boolean && (Boolean) val) {
                     wrapper.isNull(field);
                 }
             }
             case IS_NOT_NULL -> {
                 // value must be boolean
-                if (val instanceof Boolean && (Boolean)val) {
+                if (val instanceof Boolean && (Boolean) val) {
                     wrapper.isNotNull(field);
                 }
             }
@@ -87,22 +88,24 @@ public class MyBatisFlexQueryWrapper implements IQueryBuilder<QueryWrapper> {
         SearchStrategy strategy = entry.getSearchStrategy();
         Object val = entry.getValue();
         switch (strategy) {
-            case STARTS_WITH -> wrapper.and(wrapper1 -> {
-                for (String field : fields) {
-                    wrapper1.or(wrapper2 -> wrapper2.likeLeft(field, val), true);
-                }
-            });
-            case ENDS_WITH -> wrapper.and(wrapper1 -> {
-                for (String field: fields) {
-                    wrapper1.or(wrapper2 -> wrapper2.likeRight(field, val), true);
-                }
-            });
-            case BOTH -> wrapper.and(wrapper1 -> {
-                for (String field : fields) {
-                    wrapper1.or(wrapper2 -> wrapper2.like(field, val), true);
-                }
-            });
+            case STARTS_WITH -> wrapper.and(
+                    wrapper1 -> {
+                        for (String field : fields) {
+                            wrapper1.or(wrapper2 -> wrapper2.likeLeft(field, val), true);
+                        }
+                    });
+            case ENDS_WITH -> wrapper.and(
+                    wrapper1 -> {
+                        for (String field : fields) {
+                            wrapper1.or(wrapper2 -> wrapper2.likeRight(field, val), true);
+                        }
+                    });
+            case BOTH -> wrapper.and(
+                    wrapper1 -> {
+                        for (String field : fields) {
+                            wrapper1.or(wrapper2 -> wrapper2.like(field, val), true);
+                        }
+                    });
         }
     }
-
 }

@@ -1,9 +1,13 @@
 package io.github.wwtg99.core.annotation;
 
 import io.github.wwtg99.core.SorterDirection;
-
 import java.lang.annotation.*;
 
+/**
+ * Annotation for field sorter. Annotated on class field to indicate sorter.
+ *
+ * @author wwtg99
+ */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
