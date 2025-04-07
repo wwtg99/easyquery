@@ -14,7 +14,6 @@ import io.github.wwtg99.core.extractor.SorterExtractor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import lombok.Builder;
 import lombok.Data;
 import org.junit.jupiter.api.Assertions;
@@ -142,7 +141,8 @@ public class MyBatisPlusTest {
         Assertions.assertEquals("(name = ? AND type IN (?))", queryWrapper.getTargetSql().trim());
         obj1 = Obj1.builder().startsWith("start").endsWith("end").build();
         queryWrapper = wrapper.build(obj1);
-        Assertions.assertEquals("(name LIKE ? AND name LIKE ?)", queryWrapper.getTargetSql().trim());
+        Assertions.assertEquals(
+                "(name LIKE ? AND name LIKE ?)", queryWrapper.getTargetSql().trim());
         Map<String, Object> params = queryWrapper.getParamNameValuePairs();
         Assertions.assertEquals("start%", params.get("MPGENVAL1"));
         Assertions.assertEquals("%end", params.get("MPGENVAL2"));
