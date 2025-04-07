@@ -11,6 +11,7 @@ import lombok.Getter;
 
 /**
  * Extractor holder.
+ *
  * @author wwtg99
  */
 @Getter
@@ -20,6 +21,7 @@ public class ExtractorHolder {
 
     /**
      * Add extractor.
+     *
      * @param extractor extractor
      * @return this
      */
@@ -30,6 +32,7 @@ public class ExtractorHolder {
 
     /**
      * Extract fields from object.
+     *
      * @param query objet
      * @return list of entries
      */

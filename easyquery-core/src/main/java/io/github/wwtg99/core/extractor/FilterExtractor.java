@@ -12,6 +12,7 @@ import java.util.Objects;
 
 /**
  * Extractor for filter.
+ *
  * @author wwtg99
  */
 public class FilterExtractor implements IFieldExtractor {

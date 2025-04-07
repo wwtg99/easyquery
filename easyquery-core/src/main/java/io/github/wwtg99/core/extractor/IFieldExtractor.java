@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 
 /**
  * Field extractor
+ *
  * @author wwtg99
  */
 public interface IFieldExtractor {

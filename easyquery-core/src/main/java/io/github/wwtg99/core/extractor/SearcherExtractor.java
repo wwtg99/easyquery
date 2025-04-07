@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 /**
  * Extractor for searcher
+ *
  * @author wwtg99
  */
 public class SearcherExtractor implements IFieldExtractor {

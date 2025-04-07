@@ -71,6 +71,8 @@ public class MyBatisPlusQueryWrapper<E> implements IQueryBuilder<QueryWrapper<E>
                     wrapper.isNotNull(field);
                 }
             }
+            case STARTS_WITH -> wrapper.likeRight(field, val);
+            case ENDS_WITH -> wrapper.likeLeft(field, val);
         }
     }
 
@@ -92,13 +94,13 @@ public class MyBatisPlusQueryWrapper<E> implements IQueryBuilder<QueryWrapper<E>
             case STARTS_WITH -> wrapper.and(
                     wrapper1 -> {
                         for (String field : fields) {
-                            wrapper1.or(wrapper2 -> wrapper2.likeLeft(field, val));
+                            wrapper1.or(wrapper2 -> wrapper2.likeRight(field, val));
                         }
                     });
             case ENDS_WITH -> wrapper.and(
                     wrapper1 -> {
                         for (String field : fields) {
-                            wrapper1.or(wrapper2 -> wrapper2.likeRight(field, val));
+                            wrapper1.or(wrapper2 -> wrapper2.likeLeft(field, val));
                         }
                     });
             case BOTH -> wrapper.and(

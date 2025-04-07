@@ -59,6 +59,12 @@ public class MyBatisFlexTest {
         @QueryFilter(value = "flag", action = QueryFilterAction.IS_NOT_NULL)
         private Boolean isNotNull;
 
+        @QueryFilter(value = "name", action = QueryFilterAction.STARTS_WITH)
+        private String startsWith;
+
+        @QueryFilter(value = "name", action = QueryFilterAction.ENDS_WITH)
+        private String endsWith;
+
         @QuerySearcher({"name", "address"})
         private String query;
     }
@@ -142,6 +148,12 @@ public class MyBatisFlexTest {
         queryWrapper.from(TABLE_NAME);
         Assertions.assertEquals(
                 "SELECT * FROM `table` WHERE name = 'name' AND type IN ('t1')",
+                queryWrapper.toSQL().trim());
+        obj1 = Obj1.builder().startsWith("start").endsWith("end").build();
+        queryWrapper = wrapper.build(obj1);
+        queryWrapper.from(TABLE_NAME);
+        Assertions.assertEquals(
+                "SELECT * FROM `table` WHERE name LIKE 'start%' AND name LIKE '%end'",
                 queryWrapper.toSQL().trim());
         Obj2 obj2 =
                 Obj2.builder()

@@ -10,6 +10,7 @@ import java.util.Objects;
 
 /**
  * Extractor for sorter
+ *
  * @author wwtg99
  */
 public class SorterExtractor implements IFieldExtractor {

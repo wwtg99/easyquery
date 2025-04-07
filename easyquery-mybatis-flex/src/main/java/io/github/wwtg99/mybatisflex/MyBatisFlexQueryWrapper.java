@@ -74,6 +74,8 @@ public class MyBatisFlexQueryWrapper implements IQueryBuilder<QueryWrapper> {
                     wrapper.isNotNull(field);
                 }
             }
+            case STARTS_WITH -> wrapper.likeLeft(field, val);
+            case ENDS_WITH -> wrapper.likeRight(field, val);
         }
     }
 

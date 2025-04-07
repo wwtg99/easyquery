@@ -13,6 +13,8 @@ import io.github.wwtg99.core.extractor.SearcherExtractor;
 import io.github.wwtg99.core.extractor.SorterExtractor;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
 import lombok.Builder;
 import lombok.Data;
 import org.junit.jupiter.api.Assertions;
@@ -56,6 +58,12 @@ public class MyBatisPlusTest {
 
         @QueryFilter(value = "flag", action = QueryFilterAction.IS_NOT_NULL)
         private Boolean isNotNull;
+
+        @QueryFilter(value = "name", action = QueryFilterAction.STARTS_WITH)
+        private String startsWith;
+
+        @QueryFilter(value = "name", action = QueryFilterAction.ENDS_WITH)
+        private String endsWith;
 
         @QuerySearcher({"name", "address"})
         private String query;
@@ -132,6 +140,12 @@ public class MyBatisPlusTest {
         obj1 = Obj1.builder().types(List.of("t1")).name("name").isNull(false).build();
         queryWrapper = wrapper.build(obj1);
         Assertions.assertEquals("(name = ? AND type IN (?))", queryWrapper.getTargetSql().trim());
+        obj1 = Obj1.builder().startsWith("start").endsWith("end").build();
+        queryWrapper = wrapper.build(obj1);
+        Assertions.assertEquals("(name LIKE ? AND name LIKE ?)", queryWrapper.getTargetSql().trim());
+        Map<String, Object> params = queryWrapper.getParamNameValuePairs();
+        Assertions.assertEquals("start%", params.get("MPGENVAL1"));
+        Assertions.assertEquals("%end", params.get("MPGENVAL2"));
         Obj2 obj2 =
                 Obj2.builder()
                         .leftLike("left")
@@ -144,6 +158,10 @@ public class MyBatisPlusTest {
         Assertions.assertEquals(
                 "(((name LIKE ?)) AND ((name LIKE ?)) AND ((name LIKE ?))) ORDER BY sort DESC,date DESC",
                 queryWrapper.getTargetSql());
+        params = queryWrapper.getParamNameValuePairs();
+        Assertions.assertEquals("left%", params.get("MPGENVAL1"));
+        Assertions.assertEquals("%right", params.get("MPGENVAL2"));
+        Assertions.assertEquals("%both%", params.get("MPGENVAL3"));
         obj2 = Obj2.builder().bothLike("both").sort(true).dateDesc(true).build();
         queryWrapper = wrapper.build(obj2);
         Assertions.assertEquals(
