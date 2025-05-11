@@ -6,16 +6,19 @@
     <parent>
         <groupId>io.github.wwtg99</groupId>
         <artifactId>easyquery</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>easyquery-mybatis-plus</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>Easy query for mybatis-plus</description>
 
     <dependencies>
         <dependency>
             <groupId>io.github.wwtg99</groupId>
             <artifactId>easyquery-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

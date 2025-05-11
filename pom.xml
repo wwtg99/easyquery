@@ -6,8 +6,13 @@
 
     <groupId>io.github.wwtg99</groupId>
     <artifactId>easyquery</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>Make query easier for Java web service.</description>
+
+    <url>https://github.com/wwtg99/easyquery</url>
 
     <modules>
         <module>easyquery-core</module>
@@ -24,7 +29,41 @@
         <mybatis-flex.version>1.10.8</mybatis-flex.version>
         <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <spotless-plugin.version>2.44.3</spotless-plugin.version>
+        <maven.plugin.version>3.8.1</maven.plugin.version>
+        <source.plugin.version>2.2.1</source.plugin.version>
+        <javadoc.plugin.version>2.9.1</javadoc.plugin.version>
+        <gpg.plugin.version>1.5</gpg.plugin.version>
+        <publishing.plugin.version>0.4.0</publishing.plugin.version>
+        <surefire.plugin.version>3.2.5</surefire.plugin.version>
     </properties>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/wwtg99/easyquery/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:https://github.com/wwtg99/easyquery.git</connection>
+        <developerConnection>scm:git:git@github.com:wwtg99/easyquery.git</developerConnection>
+        <url>https://github.com/wwtg99/easyquery</url>
+    </scm>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>wwtg99</id>
+            <name>wwtg99</name>
+            <email>wwtg99@126.com</email>
+            <roles>
+                <role>owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <!-- 全局依赖 -->
     <dependencies>
@@ -66,6 +105,79 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.plugin.version}</version>
+                <configuration>
+                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
+                    <skip>false</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${gpg.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${publishing.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                </configuration>
             </plugin>
         </plugins>
     </build>
