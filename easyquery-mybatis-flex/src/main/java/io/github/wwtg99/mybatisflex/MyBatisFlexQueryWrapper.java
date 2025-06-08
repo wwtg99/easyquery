@@ -51,13 +51,13 @@ public class MyBatisFlexQueryWrapper implements IQueryBuilder<QueryWrapper> {
             case LE -> wrapper.le(field, val);
             case LT -> wrapper.lt(field, val);
             case IN -> {
-                // val must be Iterable and not empty
+                // val must be Collection and not empty
                 if (val instanceof Collection<?> && !((Collection<?>) val).isEmpty()) {
                     wrapper.in(field, (Collection<?>) val);
                 }
             }
             case NOT_IN -> {
-                // val must be Iterable and not empty
+                // val must be Collection and not empty
                 if (val instanceof Collection<?> && !((Collection<?>) val).isEmpty()) {
                     wrapper.notIn(field, (Collection<?>) val);
                 }

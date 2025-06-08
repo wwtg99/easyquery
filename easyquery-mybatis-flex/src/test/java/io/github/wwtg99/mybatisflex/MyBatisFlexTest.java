@@ -122,7 +122,7 @@ public class MyBatisFlexTest {
         queryWrapper = wrapper.build(obj1);
         queryWrapper.from(TABLE_NAME);
         Assertions.assertEquals(
-                "SELECT * FROM `table` WHERE name = 'name' AND age > 35 AND age < 40 AND name != 'no' AND ((address LIKE 'query%') OR (name LIKE 'query%'))",
+                "SELECT * FROM `table` WHERE name = 'name' AND age > 35 AND age < 40 AND name != 'no' AND address LIKE '%address%' AND ((address LIKE 'query%') OR (name LIKE 'query%'))",
                 queryWrapper.toSQL());
         obj1 =
                 Obj1.builder()

@@ -118,7 +118,7 @@ public class MyBatisPlusTest {
                         .build();
         queryWrapper = wrapper.build(obj1);
         Assertions.assertEquals(
-                "(name = ? AND age > ? AND age < ? AND name <> ? AND ((address LIKE ?) OR (name LIKE ?)))",
+                "(name = ? AND age > ? AND age < ? AND name <> ? AND address LIKE ? AND ((address LIKE ?) OR (name LIKE ?)))",
                 queryWrapper.getTargetSql());
         obj1 =
                 Obj1.builder()
@@ -130,7 +130,7 @@ public class MyBatisPlusTest {
                         .build();
         queryWrapper = wrapper.build(obj1);
         Assertions.assertEquals(
-                "(size >= ? AND size <= ? AND type IN (?) AND type NOT IN (?) AND flag IS NULL)",
+                "(size >= ? AND size <= ? AND type IN (?,?) AND type NOT IN (?) AND flag IS NULL)",
                 queryWrapper.getTargetSql().trim());
         obj1 = Obj1.builder().sizeGe(100).types(Collections.emptyList()).isNotNull(true).build();
         queryWrapper = wrapper.build(obj1);

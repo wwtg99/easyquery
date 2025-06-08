@@ -6,6 +6,7 @@ import io.github.wwtg99.core.QueryFilterAction;
 import io.github.wwtg99.core.SearchStrategy;
 import io.github.wwtg99.core.entry.*;
 import io.github.wwtg99.core.extractor.ExtractorHolder;
+import java.util.Collection;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -48,15 +49,15 @@ public class MyBatisPlusQueryWrapper<E> implements IQueryBuilder<QueryWrapper<E>
             case LE -> wrapper.le(field, val);
             case LT -> wrapper.lt(field, val);
             case IN -> {
-                // val must be Iterable and not empty
-                if (val instanceof Iterable<?> && ((Iterable<?>) val).iterator().hasNext()) {
-                    wrapper.in(field, val);
+                // val must be Collection and not empty
+                if ((val instanceof Collection<?>) && !((Collection<?>) val).isEmpty()) {
+                    wrapper.in(field, (Collection<?>) val);
                 }
             }
             case NOT_IN -> {
-                // val must be Iterable and not empty
-                if (val instanceof Iterable<?> && ((Iterable<?>) val).iterator().hasNext()) {
-                    wrapper.notIn(field, val);
+                // val must be Collection and not empty
+                if (val instanceof Collection<?> && !((Collection<?>) val).isEmpty()) {
+                    wrapper.notIn(field, (Collection<?>) val);
                 }
             }
             case IS_NULL -> {
