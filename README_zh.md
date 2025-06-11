@@ -82,4 +82,58 @@ Easyquery 核心库基于 JDK 17+，无任何三方依赖，基于用户自己�
 
 # 安装
 
+请先自行引入 Mybatis-Plus 或 Mybatis-Flex 依赖，并引入对应的依赖。
+
+## For Mybatis-Plus
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>io.github.wwtg99</groupId>
+    <artifactId>easyquery-mybatis-plus</artifactId>
+    <version>1.1.1</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+implementation 'io.github.wwtg99:easyquery-mybatis-plus:1.1.1'
+```
+
+### For Mybatis-Flex
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>io.github.wwtg99</groupId>
+    <artifactId>easyquery-mybatis-flex</artifactId>
+    <version>1.1.1</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+implementation 'io.github.wwtg99:easyquery-mybatis-flex:1.1.1'
+```
+
 # 使用
+
+## Demo
+
+[Easyquery-demo](https://github.com/wwtg99/easyquery-demo)
+
+## 文档
+
+此 [文档](https://deepwiki.com/wwtg99/easyquery) 由 DeepWiki 生成.
+
+## 单元测试
+
+基于 JUnit 5，请使用 Maven 运行单元测试。
+
+```shell
+mvn test
+```
