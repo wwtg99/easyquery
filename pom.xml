@@ -6,7 +6,7 @@
 
     <groupId>io.github.wwtg99</groupId>
     <artifactId>easyquery</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -18,16 +18,19 @@
         <module>easyquery-core</module>
         <module>easyquery-mybatis-plus</module>
         <module>easyquery-mybatis-flex</module>
+        <module>easyquery-spring-boot3-starter</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <lombok.version>1.18.36</lombok.version>
-        <junit.version>5.11.4</junit.version>
-        <mybatis-flex.version>1.10.8</mybatis-flex.version>
-        <mybatis-plus.version>3.5.11</mybatis-plus.version>
+        <easyquery.version>1.2.0</easyquery.version>
+        <lombok.version>1.18.38</lombok.version>
+        <junit.version>5.13.4</junit.version>
+        <mybatis-flex.version>1.11.1</mybatis-flex.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <spring-boot.version>3.5.4</spring-boot.version>
         <spotless-plugin.version>2.44.3</spotless-plugin.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <source.plugin.version>2.2.1</source.plugin.version>

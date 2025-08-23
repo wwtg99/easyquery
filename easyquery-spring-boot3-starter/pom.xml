@@ -9,22 +9,22 @@
         <version>1.2.0</version>
     </parent>
 
-    <artifactId>easyquery-mybatis-plus</artifactId>
+    <artifactId>easyquery-spring-boot3-starter</artifactId>
 
     <name>${project.artifactId}</name>
     <description>Easy query for mybatis-plus</description>
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>io.github.wwtg99</groupId>
             <artifactId>easyquery-core</artifactId>
             <version>${easyquery.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>${mybatis-plus.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
