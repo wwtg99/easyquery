@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.wwtg99</groupId>
         <artifactId>easyquery</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
     </parent>
 
     <artifactId>easyquery-spring-boot3-starter</artifactId>
